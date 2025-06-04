@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroCV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/styles.css">
+  <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>NeuroCV</h1>
+      <p class="subtitle">Upload a resume and get an instant compatibility score</p>
+    </header>
+
+    <main class="main-content">
+      <div class="card upload-card">
+        <form action="/" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="resume">Upload Resume (PDF):</label>
+            <div class="file-upload">
+              <input id="resume" type="file" name="resume" required>
+              <div class="file-upload-label">Choose a file or drag it here</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="job_desc">Job Description:</label>
+            <textarea id="job_desc" name="job_desc" rows="4" required placeholder="Paste the job description here..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="certifications">Relevant Certifications (comma-separated):</label>
+            <input id="certifications" type="text" name="certifications" placeholder="e.g. AWS, Azure, IBM" />
+          </div>
+
+          <button type="submit" class="btn-primary">Generate Score</button>
+        </form>
+      </div>
+
+      {% if total_score %}
+      <div class="card result-card">
+        <h2 class="card-title">Results</h2>
+        
+        <div class="score-grid">
+          <div class="score-item">
+            <div class="score-label">Similarity</div>
+            <div class="score-value">{{ similarity }}/5</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">Education</div>
+            <div class="score-value">{{ education }}/5</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">Experience</div>
+            <div class="score-value">{{ experience }}/5</div>
+          </div>
+          <div class="score-item">
+            <div class="score-label">Certifications</div>
+            <div class="score-value">{{ cert_score }}/5</div>
+          </div>
+        </div>
+        
+        <div class="total-score">
+          <div class="total-label">Total Score</div>
+          <div class="total-value">{{ total_score }}/20</div>
+        </div>
+        
+        <div class="status-container status-{{ 'success' if status == 'PASS' else 'fail' }}">
+          <h3 class="status-text">Status: {{ status }}</h3>
+        </div>
+      </div>
+      {% endif %}
+    </main>
+
+    <footer class="footer">
+      <p>Advanced Resume Filtering System &copy; 2025 by @scientistayaz</p>
+    </footer>
+  </div>
+</body>
+</html>
